@@ -124,7 +124,7 @@ func TestQueryParsers(t *testing.T) {
 			Score("total").
 			Tag("top").
 			BuildParser()
-		expect := `{!parent which=content_type:parent tag=top filters=$childfq excludeTags=certain score=total v=comment:SolrCloud}`
+		expect := `{!parent which=content_type:parent tag=top filters=$childfq excludeTags=certain score=total q=comment:SolrCloud}`
 		a.Equal(expect, got)
 	})
 
@@ -138,7 +138,7 @@ func TestQueryParsers(t *testing.T) {
 			Score("total").
 			Tag("top").
 			BuildParser()
-		expect := `{!parent which=content_type:parent tag=top filters=$childfq excludeTags=certain score=total v=comment:SolrCloud}`
+		expect := `{!parent which=content_type:parent tag=top filters=$childfq excludeTags=certain score=total q=comment:SolrCloud}`
 		a.Equal(expect, got)
 	})
 
@@ -150,7 +150,7 @@ func TestQueryParsers(t *testing.T) {
 			Filters("$someFilters").
 			ExcludeTags("certain").
 			BuildParser()
-		expect := `{!child of=$parent filters=$someFilters excludeTags=certain v=$parent}`
+		expect := `{!child of=$parent filters=$someFilters excludeTags=certain q=$parent}`
 		a.Equal(expect, got)
 	})
 
@@ -161,7 +161,7 @@ func TestQueryParsers(t *testing.T) {
 			Param("$fqs").
 			ExcludeTags("sample").
 			BuildParser()
-		expect := `{!filters param=$fqs excludeTags=sample v=field:text}`
+		expect := `{!filters param=$fqs excludeTags=sample q=field:text}`
 		a.Equal(expect, got)
 	})
 
