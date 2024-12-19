@@ -421,7 +421,7 @@ func (qp *ExtendedDisMaxQueryParser) BuildParser() string {
 		}
 	}
 
-	return fmt.Sprintf("{%s}", strings.Join(kv, " "))
+	return fmt.Sprintf("{%s}", strings.Join(kv, "&"))
 }
 
 // Query sets the query
