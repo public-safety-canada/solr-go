@@ -182,10 +182,10 @@ func TestJSONClientMock(t *testing.T) {
 	})
 
 	t.Run("query", func(t *testing.T) {
-		mockBody := `{"query":"{!edismax q='apple pie'}"}`
+		mockBody := `{"query":"{!lucene v='apple pie'}"}`
 		httpmock.RegisterResponder(
 			http.MethodPost,
-			baseURL+"/solr/"+collection+"/select",
+			baseURL+"/solr/"+collection+"/query",
 			newResponder(mockBody, M{}),
 		)
 
