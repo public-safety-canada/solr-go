@@ -333,7 +333,7 @@ func NewExtendedDisMaxQueryParser() *ExtendedDisMaxQueryParser {
 
 // BuildParser builds the query parser
 func (qp *ExtendedDisMaxQueryParser) BuildParser() string {
-	kv := []string{}
+	kv := []string{"edismax"}
 
 	if qp.alt != "" {
 		kv = append(kv, fmt.Sprintf("q.alt=%s", qp.alt))
@@ -421,11 +421,7 @@ func (qp *ExtendedDisMaxQueryParser) BuildParser() string {
 		}
 	}
 
-	if len(kv) > 0 {
-		return fmt.Sprintf("?%s", strings.Join(kv, "&"))
-	} else {
-		return ""
-	}
+	return fmt.Sprintf("{!%s}", strings.Join(kv, " "))
 }
 
 // Query sets the query
