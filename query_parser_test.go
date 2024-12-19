@@ -80,7 +80,7 @@ func TestQueryParsers(t *testing.T) {
 		a := assert.New(t)
 
 		got := solr.NewExtendedDisMaxQueryParser().BuildParser()
-		a.Equal("{}", got)
+		a.Equal("", got)
 
 		got = solr.NewExtendedDisMaxQueryParser().
 			Query("'solr rocks'").
@@ -105,12 +105,12 @@ func TestQueryParsers(t *testing.T) {
 			Fl("id").
 			Fq([]string{"(category((11927)))","(category((11838)))"}).
 			BuildParser()
-		expect := `{q.alt=*:*&qf='one^2.3 two three^0.4'&mm=75%&mm.autorelax=true&pf='one^2.3 two three^0.4'&ps=1&qs=1&tie=0.1&bq=category:food^10&bf=div(1,sum(1,price))^1.5&uf=title&stopwords=stuff&sow=true&boost=div(1,sum(1,price))&q='solr rocks'&rows=100&df=text&q.op=AND&start=0&fl=id&fq=(category((11927)))&fq=(category((11838)))}`
+		expect := `?q.alt=*:*&qf='one^2.3 two three^0.4'&mm=75%&mm.autorelax=true&pf='one^2.3 two three^0.4'&ps=1&qs=1&tie=0.1&bq=category:food^10&bf=div(1,sum(1,price))^1.5&uf=title&stopwords=stuff&sow=true&boost=div(1,sum(1,price))&q='solr rocks'&rows=100&df=text&q.op=AND&start=0&fl=id&fq=(category((11927)))&fq=(category((11838)))`
 		a.Equal(expect, got)
 
 		got = solr.NewExtendedDisMaxQueryParser().
 			Query("'solr rocks'").BuildParser()
-		expect = "{q='solr rocks'}"
+		expect = "?q='solr rocks'"
 		a.Equal(expect, got)
 	})
 
