@@ -138,7 +138,7 @@ func TestQueryParsers(t *testing.T) {
 			Score("total").
 			Tag("top").
 			BuildParser()
-		expect := `{!parent which=content_type:parent tag=top filters=$childfq excludeTags=certain score=total q=comment:SolrCloud}`
+		expect := `{!parent which=content_type:parent tag=top filters=$childfq excludeTags=certain score=total v=comment:SolrCloud}`
 		a.Equal(expect, got)
 	})
 
