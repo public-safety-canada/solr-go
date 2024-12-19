@@ -56,7 +56,7 @@ func (qp *StandardQueryParser) BuildParser() string {
 	}
 
 	if qp.q != "" {
-		kv = append(kv, fmt.Sprintf("q=%s", qp.q))
+		kv = append(kv, fmt.Sprintf("v=%s", qp.q))
 	}
 
 	if qp.rows != "" {
@@ -201,7 +201,7 @@ func (qp *DisMaxQueryParser) BuildParser() string {
 	}
 
 	if qp.q != "" {
-		kv = append(kv, fmt.Sprintf("q=%s", qp.q))
+		kv = append(kv, fmt.Sprintf("v=%s", qp.q))
 	}
 
 	if qp.rows != "" {
@@ -591,7 +591,7 @@ func (qp *ParentQueryParser) BuildParser() string {
 	}
 
 	if qp.q != "" {
-		kv = append(kv, fmt.Sprintf("q=%s", qp.q))
+		kv = append(kv, fmt.Sprintf("v=%s", qp.q))
 	}
 
 	return fmt.Sprintf("{!%s}", strings.Join(kv, " "))
@@ -665,7 +665,7 @@ func (qp *ChildrenQueryParser) BuildParser() string {
 	}
 
 	if qp.query != "" {
-		kv = append(kv, fmt.Sprintf("q=%s", qp.query))
+		kv = append(kv, fmt.Sprintf("v=%s", qp.query))
 	}
 
 	return fmt.Sprintf("{!%s}", strings.Join(kv, " "))
@@ -722,7 +722,7 @@ func (qp *FiltersQueryParser) BuildParser() string {
 	}
 
 	if qp.q != "" {
-		kv = append(kv, fmt.Sprintf("q=%s", qp.q))
+		kv = append(kv, fmt.Sprintf("v=%s", qp.q))
 	}
 
 	return fmt.Sprintf("{!%s}", strings.Join(kv, " "))

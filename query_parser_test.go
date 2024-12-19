@@ -26,13 +26,13 @@ func TestQueryParsers(t *testing.T) {
 			Fl("id").
 			Fq([]string{"(category((11927)))","(category((11838)))"}).
 			BuildParser()
-		expect := "{!lucene df=text q.op=AND sow=true q='solr rocks' rows=100 start=0 fl=id fq=(category((11927))) fq=(category((11838)))}"
+		expect := "{!lucene df=text q.op=AND sow=true v='solr rocks' rows=100 start=0 fl=id fq=(category((11927))) fq=(category((11838)))}"
 		a.Equal(expect, got)
 
 		got = solr.NewStandardQueryParser().
 			Query("'solr rocks'").
 			BuildParser()
-		expect = "{!lucene q='solr rocks'}"
+		expect = "{!lucene v='solr rocks'}"
 		a.Equal(expect, got)
 
 		got = solr.NewStandardQueryParser().
@@ -42,7 +42,7 @@ func TestQueryParsers(t *testing.T) {
 			Sow().
 			Rows("100").
 			BuildParser()
-		expect = "{!lucene df=text q.op=AND sow=true q='solr rocks' rows=100}"
+		expect = "{!lucene df=text q.op=AND sow=true v='solr rocks' rows=100}"
 		a.Equal(expect, got)
 	})
 
@@ -67,7 +67,7 @@ func TestQueryParsers(t *testing.T) {
 			Df("text").
 			Op("AND").
 			BuildParser()
-		expect := `{!dismax q.alt=*:* qf='one^2.3 two three^0.4' mm=75% pf='one^2.3 two three^0.4' ps=1 qs=1 tie=0.1 bq=category:food^10 bf=div(1,sum(1,price))^1.5 q='solr rocks' rows=100 df=text q.op=AND}`
+		expect := `{!dismax q.alt=*:* qf='one^2.3 two three^0.4' mm=75% pf='one^2.3 two three^0.4' ps=1 qs=1 tie=0.1 bq=category:food^10 bf=div(1,sum(1,price))^1.5 v='solr rocks' rows=100 df=text q.op=AND}`
 		a.Equal(expect, got)
 
 		got = solr.NewDisMaxQueryParser().
@@ -124,7 +124,7 @@ func TestQueryParsers(t *testing.T) {
 			Score("total").
 			Tag("top").
 			BuildParser()
-		expect := `{!parent which=content_type:parent tag=top filters=$childfq excludeTags=certain score=total q=comment:SolrCloud}`
+		expect := `{!parent which=content_type:parent tag=top filters=$childfq excludeTags=certain score=total v=comment:SolrCloud}`
 		a.Equal(expect, got)
 	})
 
@@ -150,7 +150,7 @@ func TestQueryParsers(t *testing.T) {
 			Filters("$someFilters").
 			ExcludeTags("certain").
 			BuildParser()
-		expect := `{!child of=$parent filters=$someFilters excludeTags=certain q=$parent}`
+		expect := `{!child of=$parent filters=$someFilters excludeTags=certain v=$parent}`
 		a.Equal(expect, got)
 	})
 
@@ -161,7 +161,7 @@ func TestQueryParsers(t *testing.T) {
 			Param("$fqs").
 			ExcludeTags("sample").
 			BuildParser()
-		expect := `{!filters param=$fqs excludeTags=sample q=field:text}`
+		expect := `{!filters param=$fqs excludeTags=sample v=field:text}`
 		a.Equal(expect, got)
 	})
 
