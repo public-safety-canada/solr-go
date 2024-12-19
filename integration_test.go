@@ -170,7 +170,7 @@ func newTestRunner(client solr.Client, collection string) func(t *testing.T) {
 		require.NoError(t, err, "commmit should not error")
 
 		// Query
-		qp := solr.NewStandardQueryParser().Query("*:*")
+		qp := solr.NewExtendedDisMaxQueryParser().Query("*:*")
 		query := solr.NewQuery(qp.BuildParser())
 		queryResp, err := client.Query(ctx, collection, query)
 		require.NoError(t, err, "query should not error")
