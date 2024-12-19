@@ -163,7 +163,7 @@ func TestJSONClientMock(t *testing.T) {
 		mockBody := `{"query":"{!dismax q='apple pie'}"}`
 		httpmock.RegisterResponder(
 			http.MethodPost,
-			baseURL+"/solr/"+collection+"/select",
+			baseURL+"/solr/"+collection+"/query",
 			newResponder(mockBody, M{}),
 		)
 
