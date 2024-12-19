@@ -72,7 +72,7 @@ func TestQueryParsers(t *testing.T) {
 
 		got = solr.NewDisMaxQueryParser().
 			Query("'solr rocks'").BuildParser()
-		expect = "{!dismax q='solr rocks'}"
+		expect = "{!dismax v='solr rocks'}"
 		a.Equal(expect, got)
 	})
 
