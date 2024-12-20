@@ -79,11 +79,12 @@ func TestQueryParsers(t *testing.T) {
 	t.Run("extended dismax query parser", func(t *testing.T) {
 		a := assert.New(t)
 
-		got := solr.NewExtendedDisMaxQueryParser().BuildParser()
+		got := solr.NewExtendedDisMaxQueryParser().DefType("edismax").BuildParser()
 		a.Equal("{defType=edismax}", got)
 
 		got = solr.NewExtendedDisMaxQueryParser().
 			Query("'solr rocks'").
+			DefType("edismax").
 			Alt("*:*").
 			Qf("'one^2.3 two three^0.4'").
 			Mm("75%").
@@ -105,12 +106,13 @@ func TestQueryParsers(t *testing.T) {
 			Fl("id").
 			Fq([]string{"(category((11927)))","(category((11838)))"}).
 			BuildParser()
-		expect := `{defType=edismax q.alt=*:* qf='one^2.3 two three^0.4' mm=75% mm.autorelax=true pf='one^2.3 two three^0.4' ps=1 qs=1 tie=0.1 bq=category:food^10 bf=div(1,sum(1,price))^1.5 uf=title stopwords=stuff sow=true boost=div(1,sum(1,price)) v='solr rocks' rows=100 df=text q.op=AND start=0 fl=id fq=(category((11927))) fq=(category((11838)))}`
+		expect := `{q.alt=*:* qf='one^2.3 two three^0.4' mm=75% mm.autorelax=true pf='one^2.3 two three^0.4' ps=1 qs=1 tie=0.1 bq=category:food^10 bf=div(1,sum(1,price))^1.5 uf=title stopwords=stuff sow=true boost=div(1,sum(1,price)) 'solr rocks' rows=100 df=text q.op=AND start=0 fl=id fq=(category((11927))) fq=(category((11838))) defType=edismax}`
 		a.Equal(expect, got)
 
 		got = solr.NewExtendedDisMaxQueryParser().
+			DefType("edismax").
 			Query("'solr rocks'").BuildParser()
-		expect = "{defType=edismax v='solr rocks'}"
+		expect = "{'solr rocks' defType=edismax}"
 		a.Equal(expect, got)
 	})
 

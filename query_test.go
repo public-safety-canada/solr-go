@@ -102,6 +102,7 @@ func TestQuery(t *testing.T) {
 		Limit(10).
 		Filters("inStock:true").
 		Fields("name", "price").
+		DefType("edismax").
 		BuildQuery()
 
 	expect = solr.M{
@@ -119,7 +120,8 @@ func TestQuery(t *testing.T) {
 				{"#color_tag": solr.M{"field": solr.M{"f": "color", "query": "Red"}}},
 			},
 		},
-		"query": "{defType=edismax v='solr rocks'}",
+		"query": "{'solr rocks'}",
+		"defType": "edismax",
 		"sort":  "score",
 	}
 

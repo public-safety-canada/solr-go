@@ -322,6 +322,7 @@ type ExtendedDisMaxQueryParser struct {
 	start     string   // start
 	fl        string   // field list
 	fq        []string // filter query
+	defType   string   // defType
 }
 
 var _ QueryParser = (*ExtendedDisMaxQueryParser)(nil)
@@ -333,7 +334,7 @@ func NewExtendedDisMaxQueryParser() *ExtendedDisMaxQueryParser {
 
 // BuildParser builds the query parser
 func (qp *ExtendedDisMaxQueryParser) BuildParser() string {
-	kv := []string{"defType=edismax"}
+	kv := []string{}
 
 	if qp.alt != "" {
 		kv = append(kv, fmt.Sprintf("q.alt=%s", qp.alt))
@@ -392,7 +393,7 @@ func (qp *ExtendedDisMaxQueryParser) BuildParser() string {
 	}
 
 	if qp.q != "" {
-		kv = append(kv, fmt.Sprintf("v=%s", qp.q))
+		kv = append(kv, qp.q)
 	}
 
 	if qp.rows != "" {
@@ -419,6 +420,10 @@ func (qp *ExtendedDisMaxQueryParser) BuildParser() string {
 		for _, fq := range qp.fq {
 			kv = append(kv, fmt.Sprintf("fq=%s", fq))
 		}
+	}
+
+	if qp.defType != "" {
+		kv = append(kv, fmt.Sprintf("defType=%s", qp.defType))
 	}
 
 	return fmt.Sprintf("{%s}", strings.Join(kv, " "))
@@ -547,6 +552,12 @@ func (qp *ExtendedDisMaxQueryParser) Fl(fl string) *ExtendedDisMaxQueryParser {
 // Fq sets the query filter
 func (qp *ExtendedDisMaxQueryParser) Fq(fq []string) *ExtendedDisMaxQueryParser {
 	qp.fq = fq
+	return qp
+}
+
+// defType sets the defType param
+func (qp *ExtendedDisMaxQueryParser) DefType(defType string) *ExtendedDisMaxQueryParser {
+	qp.defType = defType
 	return qp
 }
 
