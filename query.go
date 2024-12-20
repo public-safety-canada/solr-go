@@ -32,6 +32,8 @@ type Query struct {
 	// additional queries
 	// https://lucene.apache.org/solr/guide/8_7/json-query-dsl.html#additional-queries
 	queries M
+
+	defType string // defType
 }
 
 // NewQuery accepts the main query built from the various
@@ -68,6 +70,10 @@ func (q *Query) BuildQuery() M {
 		qm["fields"] = q.fields
 	}
 
+	if q.defType != "" {
+		qm["defType"] = q.defType
+	}
+
 	if len(q.facets) > 0 {
 		facets := M{}
 		for _, facet := range q.facets {
@@ -101,6 +107,12 @@ func (q *Query) Limit(limit int) *Query {
 // Filters sets the filter param
 func (q *Query) Filters(filters ...string) *Query {
 	q.filters = filters
+	return q
+}
+
+// Filters sets the filter param
+func (q *Query) DefType(defType string) *Query {
+	q.defType = defType
 	return q
 }
 
