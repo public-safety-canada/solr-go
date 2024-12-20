@@ -60,7 +60,7 @@ func TestQuery(t *testing.T) {
 				{"#color_tag": solr.M{"field": solr.M{"f": "color", "query": "Red"}}},
 			},
 		},
-		"query": "{!dismax}'solr rocks'",
+		"query": "{!dismax v='solr rocks'}",
 		"sort":  "score",
 	}
 
