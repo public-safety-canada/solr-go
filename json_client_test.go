@@ -182,7 +182,7 @@ func TestJSONClientMock(t *testing.T) {
 	})
 
 	t.Run("query", func(t *testing.T) {
-		mockBody := `{"query":"{!lucene}query:'apple pie'"}`
+		mockBody := `{"query":"{!lucene v=query:'apple pie'}"}`
 		httpmock.RegisterResponder(
 			http.MethodPost,
 			baseURL+"/solr/"+collection+"/query",
