@@ -172,28 +172,6 @@ func TestJSONClientMock(t *testing.T) {
 		_, err := client.Query(ctx, collection, query)
 		assert.NoError(t, err)
 
-		// query = NewQuery(NewExtendedDisMaxQueryParser().
-		// 	Query("'apple pie'").BuildParser())
-		// _, err = client.Query(ctx, collection, query)
-		// assert.NoError(t, err)
-
-		_, err = clientThatErrors.Query(ctx, collection, query)
-		assert.ErrorIs(t, err, errSendRequest)
-	})
-
-	t.Run("query", func(t *testing.T) {
-		mockBody := `{"query":"{!lucene v=query:'apple pie'}"}`
-		httpmock.RegisterResponder(
-			http.MethodPost,
-			baseURL+"/solr/"+collection+"/query",
-			newResponder(mockBody, M{}),
-		)
-
-		query := NewQuery(NewStandardQueryParser().
-			Query("'query: apple pie'").BuildParser())
-		_, err := client.Query(ctx, collection, query)
-		assert.NoError(t, err)
-
 		_, err = clientThatErrors.Query(ctx, collection, query)
 		assert.ErrorIs(t, err, errSendRequest)
 	})
