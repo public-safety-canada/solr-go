@@ -182,7 +182,7 @@ func TestJSONClientMock(t *testing.T) {
 	})
 
 	t.Run("query", func(t *testing.T) {
-		mockBody := `{"query":"{!lucene v='apple pie'}"}`
+		mockBody := `{"query":"{!lucene}query:'apple pie'"}`
 		httpmock.RegisterResponder(
 			http.MethodPost,
 			baseURL+"/solr/"+collection+"/query",
@@ -190,7 +190,7 @@ func TestJSONClientMock(t *testing.T) {
 		)
 
 		query := NewQuery(NewStandardQueryParser().
-			Query("'apple pie'").BuildParser())
+			Query("'query: apple pie'").BuildParser())
 		_, err := client.Query(ctx, collection, query)
 		assert.NoError(t, err)
 

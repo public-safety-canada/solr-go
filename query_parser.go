@@ -201,7 +201,7 @@ func (qp *DisMaxQueryParser) BuildParser() string {
 	}
 
 	if qp.q != "" {
-		kv = append(kv, fmt.Sprintf("v=%s", qp.q))
+		kv = append(kv, fmt.Sprintf("{!dismax}%s", qp.q))
 	}
 
 	if qp.rows != "" {
@@ -333,7 +333,7 @@ func NewExtendedDisMaxQueryParser() *ExtendedDisMaxQueryParser {
 
 // BuildParser builds the query parser
 func (qp *ExtendedDisMaxQueryParser) BuildParser() string {
-	kv := []string{"edismax"}
+	kv := []string{}
 
 	if qp.alt != "" {
 		kv = append(kv, fmt.Sprintf("q.alt=%s", qp.alt))
@@ -392,7 +392,7 @@ func (qp *ExtendedDisMaxQueryParser) BuildParser() string {
 	}
 
 	if qp.q != "" {
-		kv = append(kv, fmt.Sprintf("q=%s", qp.q))
+		kv = append(kv, fmt.Sprintf("{!edismax}%s", qp.q))
 	}
 
 	if qp.rows != "" {
@@ -421,7 +421,7 @@ func (qp *ExtendedDisMaxQueryParser) BuildParser() string {
 		}
 	}
 
-	return fmt.Sprintf("{!%s}", strings.Join(kv, " "))
+	return fmt.Sprintf("%s", strings.Join(kv, " "))
 }
 
 // Query sets the query
@@ -555,6 +555,7 @@ type ParentQueryParser struct {
 	which,
 	tag,
 	filters,
+	defType,
 	excludeTags,
 	score,
 	q string
@@ -581,6 +582,10 @@ func (qp *ParentQueryParser) BuildParser() string {
 
 	if qp.filters != "" {
 		kv = append(kv, fmt.Sprintf("filters=%s", qp.filters))
+	}
+
+	if qp.defType != "" {
+		kv = append(kv, fmt.Sprintf("defType=%s", qp.defType))
 	}
 
 	if qp.excludeTags != "" {
@@ -613,6 +618,12 @@ func (qp *ParentQueryParser) Tag(tag string) *ParentQueryParser {
 // Filters sets the filters param
 func (qp *ParentQueryParser) Filters(filters string) *ParentQueryParser {
 	qp.filters = filters
+	return qp
+}
+
+// defType sets the defType param
+func (qp *ParentQueryParser) DefType(defType string) *ParentQueryParser {
+	qp.defType = defType
 	return qp
 }
 
