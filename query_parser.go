@@ -201,7 +201,7 @@ func (qp *DisMaxQueryParser) BuildParser() string {
 	}
 
 	if qp.q != "" {
-		kv = append(kv, fmt.Sprintf("{!dismax}%s", qp.q))
+		kv = append(kv, fmt.Sprintf("v=%s", qp.q))
 	}
 
 	if qp.rows != "" {
