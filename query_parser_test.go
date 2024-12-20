@@ -32,7 +32,7 @@ func TestQueryParsers(t *testing.T) {
 		got = solr.NewStandardQueryParser().
 			Query("'solr rocks'").
 			BuildParser()
-		expect = "{!lucene}v='solr rocks'"
+		expect = "{!lucene v='solr rocks'}"
 		a.Equal(expect, got)
 
 		got = solr.NewStandardQueryParser().
