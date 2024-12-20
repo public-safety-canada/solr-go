@@ -70,7 +70,7 @@ func TestQuery(t *testing.T) {
 
 	a = assert.New(t)
 	got = solr.NewQuery(solr.NewExtendedDisMaxQueryParser().
-		Query("'solr rocks'").BuildParser()).
+		Query("\"solr rocks\"").BuildParser()).
 		Queries(solr.M{
 			"query_filters": []solr.M{
 				{
@@ -119,7 +119,7 @@ func TestQuery(t *testing.T) {
 				{"#color_tag": solr.M{"field": solr.M{"f": "color", "query": "Red"}}},
 			},
 		},
-		"query": "{!edismax v='solr rocks'}",
+		"query": `{!edismax q="solr rocks"}`,
 		"sort":  "score",
 	}
 
